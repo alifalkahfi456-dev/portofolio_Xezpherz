@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Xezpherz | Elite Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #050810;
+            --text-color: #f8fafc;
+            --accent-1: #00f2fe;
+            --accent-2: #4facfe;
+            --accent-3: #8a2be2;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(0, 242, 254, 0.15), transparent 35%),
+                radial-gradient(circle at 100% 100%, rgba(138, 43, 226, 0.15), transparent 35%);
+            background-attachment: fixed;
+        }
+
+        /* === TOP STATUS === */
+        .top-bar {
+            position: fixed; top: 15px; left: 0; right: 0;
+            padding: 0 20px; display: flex; justify-content: space-between; align-items: center;
+            z-index: 1001;
+        }
+        .pill {
+            background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(15px);
+            padding: 8px 16px; border-radius: 50px; border: 1px solid var(--glass-border);
+            font-size: 11px; font-weight: 700; color: var(--accent-1);
+        }
+
+        /* === NAV MOBILE === */
+        nav {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(10, 15, 30, 0.8); backdrop-filter: blur(25px);
+            padding: 10px 15px; border-radius: 100px; border: 1px solid var(--glass-border);
+            display: flex; gap: 5px; z-index: 1000; box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+        nav a {
+            color: #64748b; text-decoration: none; font-size: 18px; width: 42px; height: 42px;
+            display: flex; align-items: center; justify-content: center; border-radius: 50%;
+            transition: 0.4s;
+        }
+        nav a.active { color: #000; background: var(--accent-1); box-shadow: 0 0 20px rgba(0, 242, 254, 0.6); transform: scale(1.1); }
+
+        /* === PAGES === */
+        .page { display: none; min-height: 100vh; padding: 90px 6% 130px; animation: slideIn 0.5s ease forwards; }
+        .page.active { display: flex; flex-direction: column; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .glass-card { 
+            background: var(--glass); backdrop-filter: blur(20px); 
+            border: 1px solid var(--glass-border); border-radius: 24px; 
+            padding: 20px; margin-bottom: 20px;
+        }
+
+        /* === HERO === */
+        .hero-title { font-size: clamp(40px, 14vw, 70px); font-weight: 800; line-height: 1; background: linear-gradient(to bottom, #fff, #64748b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .typing { font-size: 18px; color: var(--accent-1); font-weight: 600; min-height: 27px; margin-bottom: 10px; }
+        .visitor-count { font-size: 11px; color: #64748b; letter-spacing: 1px; text-transform: uppercase; }
+
+        /* === ABOUT SECTION === */
+        .profile-img-container {
+            width: 120px; height: 120px; margin: 0 auto 20px;
+            border-radius: 50%; padding: 5px;
+            background: linear-gradient(45deg, var(--accent-1), var(--accent-3));
+            position: relative;
+        }
+        .profile-img-container img {
+            width: 100%; height: 100%; border-radius: 50%;
+            object-fit: cover; border: 3px solid var(--bg-color);
+        }
+        .bio-list { list-style: none; text-align: left; margin-top: 15px; }
+        .bio-list li { 
+            display: flex; justify-content: space-between; 
+            padding: 10px 0; border-bottom: 1px solid var(--glass-border);
+            font-size: 13px;
+        }
+        .bio-list li span:first-child { color: var(--accent-1); font-weight: 600; }
+
+        /* === BUTTONS & INPUTS === */
+        .btn {
+            padding: 14px 28px; border-radius: 50px; border: none; font-weight: 700; font-size: 14px;
+            cursor: pointer; transition: 0.3s; background: linear-gradient(45deg, var(--accent-2), var(--accent-3)); color: #fff;
+        }
+        .tool-input { width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; outline: none; margin-bottom: 10px; font-size: 13px; }
+
+        /* === CONTACT SOCIALS === */
+        .social-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
+        .social-card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            padding: 20px; border-radius: 20px; text-decoration: none;
+            display: flex; flex-direction: column; align-items: center; gap: 8px; transition: 0.3s;
+        }
+        .social-card i { font-size: 32px; }
+        .social-card span { font-size: 12px; font-weight: 700; color: #fff; }
+        .etika-box { padding: 15px; background: rgba(0, 242, 254, 0.05); border-radius: 15px; border-left: 3px solid var(--accent-1); }
+        .etika-box p { font-size: 12px; color: #94a3b8; line-height: 1.6; }
+
+        /* === ARCADE & DPAD === */
+        #snake-canvas { width: 100%; height: auto; aspect-ratio: 1/1; border-radius: 15px; border: 2px solid var(--accent-1); background: #010205; touch-action: none; box-shadow: 0 0 30px rgba(0, 242, 254, 0.1); }
+        .joy-container { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 25px; }
+        .joy-row { display: flex; gap: 8px; }
+        .joy-btn { 
+            width: 50px; height: 50px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); 
+            border-radius: 15px; color: #fff; display: flex; align-items: center; justify-content: center; 
+            font-size: 22px; cursor: pointer; transition: 0.2s;
+        }
+        .joy-btn:active { background: var(--accent-1); color: #000; transform: scale(0.9); box-shadow: 0 0 20px var(--accent-1); }
+
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 9999; }
+    </style>
+</head>
+<body onclick="playMusic()">
+
+    <audio id="myaudio" loop><source src="https://files.catbox.moe/0a83dx.mp3" type="audio/mpeg"></audio>
+
+    <div class="overlay" id="modal-box">
+        <div class="glass-card" style="text-align: center; width: 85%; max-width: 320px;">
+            <h2 style="color: var(--accent-1);">GAME OVER</h2>
+            <p id="score-res" style="margin: 15px 0; color: #94a3b8;">Skor Kamu: 0</p>
+            <button class="btn" style="width: 100%" onclick="closeModal()">Main Lagi</button>
+        </div>
+    </div>
+
+    <div class="top-bar">
+        <div class="pill" id="clock">00:00:00</div>
+        <div class="pill" onclick="toggleMusic()" style="cursor: pointer;">
+            <i class="ri-music-2-fill"></i> <span id="m-status">OFF</span>
+        </div>
+    </div>
+
+    <nav>
+        <a onclick="go('home')" class="active" id="n-home"><i class="ri-home-smile-2-line"></i></a>
+        <a onclick="go('about')" id="n-about"><i class="ri-user-6-line"></i></a>
+        <a onclick="go('skills')" id="n-skills"><i class="ri-fire-line"></i></a>
+        <a onclick="go('lab')" id="n-lab"><i class="ri-magic-line"></i></a>
+        <a onclick="go('arcade')" id="n-arcade"><i class="ri-gamepad-line"></i></a>
+        <a onclick="go('contact')" id="n-contact"><i class="ri-send-plane-2-line"></i></a>
+    </nav>
+
+    <main>
+        <section id="home" class="page active" style="text-align: center; justify-content: center;">
+            <p style="text-transform: uppercase; letter-spacing: 5px; font-size: 10px; color: var(--accent-1); margin-bottom: 10px;">Indonesian Developer</p>
+            <h1 class="hero-title">XEZPHERZ</h1>
+            <div class="typing" id="typed"></div>
+            <div class="visitor-count">
+                <i class="ri-eye-line"></i> <span id="v-count">2,481,903</span> Online Visitors
+            </div>
+        </section>
+
+        <section id="about" class="page">
+            <h2 style="text-align: center; margin-bottom: 25px;">About <span>Me</span></h2>
+            <div class="glass-card" style="text-align: center;">
+                <div class="profile-img-container">
+                    <img src="https://gangalink.vercel.app/i/3bpgs1c9.jpg" alt="Profile Photo">
+                </div>
+                <h3 style="color: var(--accent-1);">Alif (Xezpherz)</h3>
+                <p style="font-size: 12px; color: #94a3b8; margin-top: 5px;">"Stay focus on your goals, not your obstacles."</p>
+                
+                <ul class="bio-list">
+                    <li><span>Status</span> <span>Student</span></li>
+                    <li><span>Region</span> <span>Lampung, ID</span></li>
+                    <li><span>Hobbies</span> <span>Coding, Gaming, Design</span></li>
+                    <li><span>Specialty</span> <span>Web & Python Scripting</span></li>
+                </ul>
+            </div>
+            <div class="glass-card">
+                <h4 style="font-size: 14px; margin-bottom: 10px; color: var(--accent-1);">Little Story</h4>
+                <p style="font-size: 13px; line-height: 1.6; color: #cbd5e1;">Seorang pelajar yang tertarik di dunia Web Development. Fokus pada pembuatan script Telegram Bot, Automasi Python, dan UI modern yang interaktif.</p>
+            </div>
+        </section>
+
+        <section id="skills" class="page">
+            <h2 style="text-align: center; margin-bottom: 25px;">Expertise</h2>
+            <div class="glass-card" style="display: flex; align-items: center; gap: 15px;">
+                <i class="ri-html5-fill" style="font-size: 30px; color: #E34F26;"></i>
+                <div><h4>HTML 5</h4><p style="font-size: 11px; color: #64748b;">Structure & Semantics</p></div>
+            </div>
+            <div class="glass-card" style="display: flex; align-items: center; gap: 15px;">
+                <i class="ri-css3-fill" style="font-size: 30px; color: #1572B6;"></i>
+                <div><h4>CSS 3</h4><p style="font-size: 11px; color: #64748b;">Liquid Glass & UI</p></div>
+            </div>
+            <div class="glass-card" style="display: flex; align-items: center; gap: 15px;">
+                <i class="ri-javascript-fill" style="font-size: 30px; color: #F7DF1E;"></i>
+                <div><h4>JavaScript</h4><p style="font-size: 11px; color: #64748b;">Logic & Interactions</p></div>
+            </div>
+        </section>
+
+        <section id="lab" class="page">
+            <h2 style="text-align: center; margin-bottom: 20px;">The Lab</h2>
+            <div class="glass-card">
+                <h4 style="margin-bottom: 10px; font-size: 13px;">Password Generator</h4>
+                <input type="text" id="p-res" readonly class="tool-input" placeholder="Result...">
+                <button class="btn" style="width: 100%" onclick="genP()">Generate</button>
+            </div>
+            <div class="glass-card">
+                <h4 style="margin-bottom: 10px; font-size: 13px;">Base64 Tool</h4>
+                <textarea id="b64-text" class="tool-input" style="height: 60px;" placeholder="Text here..."></textarea>
+                <div style="display:flex; gap:10px;">
+                    <button class="btn" style="flex:1" onclick="procB64(true)">Encode</button>
+                    <button class="btn" style="flex:1; background:var(--glass)" onclick="procB64(false)">Decode</button>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h4 style="margin-bottom: 10px; font-size: 13px;">PX to REM</h4>
+                <input type="number" id="px-in" class="tool-input" placeholder="Pixels (e.g. 16)" oninput="toRem()">
+                <p id="rem-out" style="text-align: center; color: var(--accent-1); font-weight: bold;">1rem</p>
+            </div>
+        </section>
+
+        <section id="arcade" class="page">
+            <h2 style="text-align: center; margin-bottom: 15px;">Arcade</h2>
+            <div class="glass-card" style="text-align: center;">
+                <p style="color: var(--accent-1); font-weight: 700; margin-bottom: 10px; letter-spacing: 2px;">SCORE: <span id="s-val">0</span></p>
+                <canvas id="snake-canvas" width="400" height="400"></canvas>
+                <div class="joy-container">
+                    <div class="joy-row"><div class="joy-btn" onclick="setDir('UP')"><i class="ri-arrow-up-s-line"></i></div></div>
+                    <div class="joy-row">
+                        <div class="joy-btn" onclick="setDir('LEFT')"><i class="ri-arrow-left-s-line"></i></div>
+                        <div class="joy-btn" style="background:transparent; border:none; opacity:0.2;"><i class="ri-checkbox-blank-circle-fill" style="font-size:10px;"></i></div>
+                        <div class="joy-btn" onclick="setDir('RIGHT')"><i class="ri-arrow-right-s-line"></i></div>
+                    </div>
+                    <div class="joy-row"><div class="joy-btn" onclick="setDir('DOWN')"><i class="ri-arrow-down-s-line"></i></div></div>
+                </div>
+                <button class="btn" style="width: 100%; margin-top: 20px; background: rgba(255,255,255,0.05);" onclick="startGame()">Start Game</button>
+            </div>
+        </section>
+
+        <section id="contact" class="page">
+            <h2 style="text-align: center; margin-bottom: 20px;">Contact Me</h2>
+            <div class="social-grid">
+                <a href="https://wa.me/6287825659585" target="_blank" class="social-card"><i class="ri-whatsapp-line" style="color: #25D366;"></i><span>WhatsApp</span></a>
+                <a href="https://t.me/maklowhoyot" target="_blank" class="social-card"><i class="ri-telegram-line" style="color: #24A1DE;"></i><span>Telegram</span></a>
+                <a href="https://www.instagram.com/alfalkhfii_?igsh=MXU5YjNtbHpiMDJ0dA==" target="_blank" class="social-card"><i class="ri-instagram-line" style="color: #E4405F;"></i><span>Instagram</span></a>
+                <a href="https://tiktok.com/@lipppmauuharumm" target="_blank" class="social-card"><i class="ri-tiktok-line"></i><span>TikTok</span></a>
+            </div>
+            <div class="etika-box">
+                <h4 style="font-size: 13px; color: var(--accent-1); margin-bottom: 8px;"><i class="ri-information-line"></i> Etika Menghubungi:</h4>
+                <p>1. Gunakan bahasa sopan & salam.<br>2. Sampaikan tujuan secara jelas.<br>3. Hindari spamming.<br>4. Harap sabar menunggu respon.</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function go(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+            document.getElementById('n-' + id).classList.add('active');
+            if(id !== 'arcade') stopEngine();
+        }
+        setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('id-ID'); }, 1000);
+
+        let count = 2481903;
+        setInterval(() => { count += Math.floor(Math.random() * 3); document.getElementById('v-count').innerText = count.toLocaleString(); }, 3000);
+
+        const audio = document.getElementById('myaudio');
+        function playMusic() { audio.play().catch(()=>{}); document.getElementById('m-status').innerText="ON"; }
+        function toggleMusic() { if(audio.paused){ audio.play(); document.getElementById('m-status').innerText="ON"; } else { audio.pause(); document.getElementById('m-status').innerText="OFF"; } }
+
+        const txt = ["Web Developer", "UI/UX Designer", "Python Scripter"];
+        let idx=0, charIdx=0, isDel=false;
+        function type() {
+            const cur = txt[idx], el = document.getElementById('typed');
+            el.innerText = isDel ? cur.substring(0, charIdx--) : cur.substring(0, charIdx++);
+            if(!isDel && charIdx > cur.length) { isDel = true; setTimeout(type, 2000); }
+            else if(isDel && charIdx < 0) { isDel = false; idx = (idx+1)%txt.length; setTimeout(type, 500); }
+            else setTimeout(type, isDel ? 50 : 100);
+        }
+        type();
+
+        function genP() { document.getElementById('p-res').value = Math.random().toString(36).slice(-10).toUpperCase(); }
+        function procB64(enc) { const el = document.getElementById('b64-text'); try { el.value = enc ? btoa(el.value) : atob(el.value); } catch(e) { alert("Invalid!"); } }
+        function toRem() { const px = document.getElementById('px-in').value; document.getElementById('rem-out').innerText = (px/16) + "rem"; }
+
+        const cvs = document.getElementById("snake-canvas"), ctx = cvs.getContext("2d"), box = 20;
+        let snake, food, d, score, engine;
+        function startGame() {
+            stopEngine();
+            snake = [{x: 9 * box, y: 10 * box}];
+            food = { x: Math.floor(Math.random()*19+1)*box, y: Math.floor(Math.random()*19+1)*box };
+            score = 0; d = "RIGHT";
+            document.getElementById("s-val").innerText = score;
+            engine = setInterval(draw, 140);
+        }
+        function stopEngine() { clearInterval(engine); }
+        function setDir(v) { 
+            if(v=="LEFT" && d!="RIGHT") d="LEFT"; if(v=="UP" && d!="DOWN") d="UP";
+            if(v=="RIGHT" && d!="LEFT") d="RIGHT"; if(v=="DOWN" && d!="UP") d="DOWN";
+        }
+        function draw() {
+            ctx.fillStyle = "#010205"; ctx.fillRect(0,0,400,400);
+            for(let i=0; i<snake.length; i++) {
+                ctx.fillStyle = (i==0) ? "#00f2fe" : "rgba(0, 242, 254, 0.3)";
+                ctx.fillRect(snake[i].x, snake[i].y, box, box);
+            }
+            ctx.fillStyle = "#8a2be2"; ctx.fillRect(food.x, food.y, box, box);
+            let hX = snake[0].x, hY = snake[0].y;
+            if(d=="LEFT") hX -= box; if(d=="UP") hY -= box;
+            if(d=="RIGHT") hX += box; if(d=="DOWN") hY += box;
+            if(hX == food.x && hY == food.y) {
+                score++; document.getElementById("s-val").innerText = score;
+                food = { x: Math.floor(Math.random()*19+1)*box, y: Math.floor(Math.random()*19+1)*box };
+            } else { snake.pop(); }
+            let nH = { x: hX, y: hY };
+            if(hX<0 || hX>=400 || hY<0 || hY>=400 || snake.some(s => s.x==nH.x && s.y==nH.y)) {
+                stopEngine();
+                document.getElementById('score-res').innerText = "Skor: " + score;
+                document.getElementById('modal-box').style.display = "flex";
+                return;
+            }
+            snake.unshift(nH);
+        }
+        function closeModal() { document.getElementById('modal-box').style.display="none"; startGame(); }
+    </script>
+</body>
+</html>
